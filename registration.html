@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css" />
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    </head>
+    <body>
+
+
+<!-- multistep form -->
+<form id="msform">
+    <!-- fieldsets -->
+    <fieldset>
+      <h2 class="fs-title">Create your account</h2>
+      <h3 class="fs-subtitle">Seller registration</h3>
+      <input type="text" name="name" placeholder="Enter Name" id="name" />
+      <input type="text" name="address" placeholder="Enter Address" id="address" />
+      <input type="text" name="phone" placeholder="Enter Number" id="phone" />
+      <input type="text" name="email" placeholder="Enter Email" id="email"/>
+      <input type="text" name="username" placeholder="Enter Username" id="username" />
+      <input type="password" name="pass" placeholder="Enter Password" id="password"/>
+      <input type="submit"  class="next action-button" value="Submit" />
+    </fieldset>
+  </form>
+
+
+     <!-- java script  -->
+
+     <script type="text/javascript">
+
+        const form = document.getElementById('msform');
+        const address = document.getElementById('address');
+        const phone = document.getElementById('phone');
+        const email = document.getElementById('email');
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+
+        form.addEventListener('submit', (event) =>{
+            event.preventDefault();
+            validate();
+        })
+
+        const validate = () =>{
+        const address = address.value.trim();
+        const phone = phone.value.trim();
+        const email = email.value.trim();
+        const username = username.value.trim();
+        const password = password.value.trim();
+    
+    }
+
+</script>
+    </body>
+</html>
