@@ -282,13 +282,13 @@ header{
 /* registration */
 
 /*form styles*/
-#msform {
+#form {
 	width: 400px;
 	margin: 50px auto;
 	text-align: center;
 	position: relative;
 }
-#msform fieldset {
+#form fieldset {
 	background: white;
 	border: 0 none;
 	border-radius: 3px;
@@ -302,11 +302,11 @@ header{
 	position: relative;
 }
 /*Hide all except first fieldset*/
-#msform fieldset:not(:first-of-type) {
+#form fieldset:not(:first-of-type) {
 	display: none;
 }
 /*inputs*/
-#msform input, #msform textarea {
+#form input, #msform textarea {
 	padding: 15px;
 	border: 1px solid #ccc;
 	border-radius: 3px;
@@ -318,7 +318,7 @@ header{
 	font-size: 13px;
 }
 /*buttons*/
-#msform .action-button {
+#form .action-button {
 	width: 100px;
 	background: #ae2727;
 	font-weight: bold;
@@ -331,10 +331,10 @@ header{
   text-decoration: none;
   font-size: 14px;
 }
-#msform .action-button:hover{
+#form .action-button:hover{
     background-color: #add8e6;}
  
-#msform .action-button:hover, #msform .action-button:focus {
+#form .action-button:hover, #msform .action-button:focus {
 	box-shadow: 0 0 0 2px white, 0 0 0 3px blueviolet;
 }
 /*headings*/
@@ -350,6 +350,11 @@ header{
 	color: #666;
 	margin-bottom: 20px;
 }
+
+.form-control.error{
+    color: var(--main-color);
+}
+
 /*progressbar*/
 #progressbar {
 	margin-bottom: 30px;

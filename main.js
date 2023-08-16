@@ -8,3 +8,5 @@ document.querySelector('#search-icon').onClick = () => {
 document.querySelector('#login-btn').onClick = () =>{
     document.querySelector('.login-form-container').classList.toogle('active');
 }
+
+
