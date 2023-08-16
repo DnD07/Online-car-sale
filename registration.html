@@ -1,54 +1,202 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="style.css" />
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    </head>
-    <body>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- multistep form -->
+    <form class="form-group" id="form" action="#">
+      <!-- fieldsets -->
+      <fieldset>
+        <h2 class="fs-title">Create your account</h2>
+        <h3 class="fs-subtitle">Seller registration</h3>
+        <input
+          type="text"
+          name="name"
+          placeholder="Enter Name"
+          id="name"
+          class="form-group"
+          autocomplete="off"
+          required
+        />
+        <input
+          type="text"
+          name="address"
+          placeholder="Enter Address"
+          id="address"
+          class="form-group"
+          autocomplete="off"
+          required
+        />
+        <input
+          type="number"
+          name="phone"
+          placeholder="Enter Number"
+          id="phone"
+          class="form-group"
+          autocomplete="off"
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter Email"
+          id="email"
+          class="form-group"
+          autocomplete="off"
+          required
+        />
+        <input
+          type="text"
+          name="username"
+          placeholder="Enter Username"
+          id="username"
+          class="form-group"
+          autocomplete="off"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter Password"
+          id="password"
+          class="form-group"
+          autocomplete="off"
+          required
+        />
+        <input
+          type="submit"
+          class="next action-button"
+          onclick="saveData()"
+          value="Submit"
+          id="save_btn"
+        />
+      </fieldset>
+      <!-- <small>Error msg</small> -->
+    </form>
+
+    <!-- java script  -->
+
+    <script type="text/javascript">
+      const form = document.getElementById("form");
+      const name = document.getElementById("name");
+      const address = document.getElementById("address");
+      const phone = document.getElementById("phone");
+      const email = document.getElementById("email");
+      const username = document.getElementById("username");
+      const password = document.getElementById("password");
+
+      function saveData() {
+        let namee = document.getElementById("name").value;
+        let addresss = document.getElementById("address").value;
+        let phonee = document.getElementById("phone").value;
+        let emaill = document.getElementById("email").value;
+        let username = document.getElementById("username").value;
+        let passwordd = document.getElementById("password").value;
+
+        //  localStorage.setItem('name', namee);
+        //  localStorage.setItem('addresss',addresss);
+        //  localStorage.setItem('phone', phonee);
+        //  localStorage.setItem('email', emaill);
+        //  localStorage.setItem('username', usernames);
+        //  localStorage.setItem('password',passwordd);
+
+       
+
+      // validate
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        validate();
+      });
+
+      const validate = () => {
+        const addressVal = address.value.trim();
+        const phoneVal = phone.value.trim();
+        const emailVal = email.value.trim();
+        const usernameVal = username.value.trim();
+        const passwordVal = password.value.trim();
+
+        // Address validate
+        if (addressVal === "") {
+          setErrormsg(address, "address cannot be blank");
+        } else if (addressVal.length < 2) {
+          setErrormsg(address, "address min 3 char");
+        } else {
+          setSuccessmsg(address);
+        }
+
+        // phone validate
+
+        if (phoneVal === "") {
+          setErrormsg(phone, "phone cannot be blank");
+        } else if (phoneVal.length != 10) {
+          setErrormsg(phone, "phone min 10 char");
+        } else {
+          setSuccessmsg(phone);
+        }
+
+        // email validate
+        if (emailVal === "") {
+          setErrormsg(email, "email cannot be blank");
+        } else if (!isEmail(emailVal)) {
+          setErrormsg(email, "email min 10 char");
+        } else {
+          setSuccessmsg(email);
+        }
+
+        // username validate
+        if (usernameVal === "") {
+          setErrormsg(username, "username cannot be blank");
+        } else if (usernameVal.length < 2) {
+          setErrormsg(username, "username min 3 char");
+        } else {
+          setSuccessmsg(username);
+        }
+
+        // password validate
+
+        if (passwordVal === "") {
+          setErrormsg(password, "username cannot be blank");
+        } else if (passwordVal.length < 2) {
+          setErrormsg(password, "username min 3 char");
+        } else {
+          setSuccessmsg(password);
+        }
 
 
-<!-- multistep form -->
-<form id="msform">
-    <!-- fieldsets -->
-    <fieldset>
-      <h2 class="fs-title">Create your account</h2>
-      <h3 class="fs-subtitle">Seller registration</h3>
-      <input type="text" name="name" placeholder="Enter Name" id="name" />
-      <input type="text" name="address" placeholder="Enter Address" id="address" />
-      <input type="text" name="phone" placeholder="Enter Number" id="phone" />
-      <input type="text" name="email" placeholder="Enter Email" id="email"/>
-      <input type="text" name="username" placeholder="Enter Username" id="username" />
-      <input type="password" name="pass" placeholder="Enter Password" id="password"/>
-      <input type="submit"  class="next action-button" value="Submit" />
-    </fieldset>
-  </form>
 
+      };
 
-     <!-- java script  -->
+      let user_records = new Array();
+        user_records = JSON.parse(localStorage.getItem("users"))
+          ? JSON.parse(localStorage.getItem("users"))
+          : [];
 
-     <script type="text/javascript">
-
-        const form = document.getElementById('msform');
-        const address = document.getElementById('address');
-        const phone = document.getElementById('phone');
-        const email = document.getElementById('email');
-        const username = document.getElementById('username');
-        const password = document.getElementById('password');
-
-        form.addEventListener('submit', (event) =>{
-            event.preventDefault();
-            validate();
-        })
-
-        const validate = () =>{
-        const address = address.value.trim();
-        const phone = phone.value.trim();
-        const email = email.value.trim();
-        const username = username.value.trim();
-        const password = password.value.trim();
-    
-    }
-
-</script>
-    </body>
+        // username compare
+        if (
+          user_records.some((v) => {
+            return v.username == username;
+          })
+        ) {
+          alert("Username match.");
+        } else {
+          user_records.push({
+            name: namee,
+            address: addresss,
+            phone: phonee,
+            email: emaill,
+            username: username,
+            password: passwordd,
+          });
+          localStorage.setItem("users", JSON.stringify(user_records));
+          window.location.href = 'login.html'
+        }
+      }
+    </script>
+  </body>
 </html>
