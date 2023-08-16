@@ -1,35 +1,93 @@
- <!DOCTYPE html>
- <html>
-    <head>
-        <link rel="stylesheet" href="style.css" />
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-        <body>
-             
-            <div class="login">
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="login" id="form">
+      <!-- image login  -->
+      <div class="img-login">
+        <img src="img/logincar.jpg" alt="logincar" />
+      </div>
 
-               <!-- image login  -->
-                <div class="img-login">
-                    <img src="img/logincar.jpg" alt="logincar">
-    
-                </div>
-    
-    
-                <!-- login form  -->
+      <!-- login form  -->
+      <form action="#">
+          <div class="login-form-container container" >
+            <form action="" id="form">
+              <h3>User Login</h3>
+              <input
+                type="name"
+                placeholder="username"
+                class="box"
+                id="username"
+                required
+              /><br />
+              <input
+                type="password"
+                placeholder="password"
+                id="password"
+                class="box"
+                required
+              /><br />
+              <p>Forget password<a href="#">Click here</a></p>
+              <input
+                type="submit"
+                value="login now"
+                class="btnlogin"
+                id="save_button"
+                onclick="saveData()"
+                
+              />
+              <p>don't have an account <a href="registration.html">Register</a></p>
+            </form>
+          </div>
+        </div>
 
-     <div class="login-form-container container">
-        <form action="" id="msform">
-        <h3>User Login</h3>
-        <input type="name" placeholder="username" class="box" required><br>
-        <input type="password" placeholder="password" class="box" required><br>
-        <p>Forget password<a href="#">Click here</a></p>
-        <input type="submit" value="login now" class="btnlogin">
-        <p>don't have an account <a href="registration.html">Register</a></p>
-    </form>
-    </div>
-            </div>
 
-           
-        </body>
-    </head>
- </html>
- 
+      </form>
+
+
+    <script>
+        const form = document.getElementById('form');
+       const username = document.getElementById("username");
+      const password = document.getElementById("password");
+      
+
+      function saveData() {
+
+        let username = document.getElementById('username').value;
+        let password = document.getElementById('password').value;
+
+        let user_record = new Array();
+        user_record = JSON.parse(localStorage.getItem('users'))?JSON.parse(localStorage.getItem('users')) : []
+
+        if (username.trim() === '' || password.trim() === '') {
+        alert('Please enter both username and password.');
+        return;
+    }
+
+    let user_records = JSON.parse(localStorage.getItem('users')) || [];
+
+
+        if(user_records.some((v) => {
+            return v.username == username && v.password == password
+        })){
+            let current_user = user_records.filter((v) => {
+                return v.username == username && v.password == password
+                
+            })[0]
+            // localStorage.setItem('name', current_user.name);
+            localStorage.setItem('username', current_user.username);
+            window.location.href = 'saller.html'
+            alert('Login successfullly') 
+        }else{
+            alert('Login fail')
+        }
+      }
+    </script>
+  </body>
+</html>
