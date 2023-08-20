@@ -7,6 +7,27 @@
     <title>Online car sale</title>
     <link rel="stylesheet" href="style.css" />
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+       @media only screen and (max-width: 480px) {
+            /* Adjust styles for screens up to 480px wide (typical for mobile devices) */
+            .navbar {
+                flex-direction: column;
+            }
+            .navbar li {
+                margin: 5px 0;
+            }
+            .search-box {
+                margin: 10px 0;
+            }
+            .home-text h1 {
+                font-size: 24px;
+            }
+            .about-text h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -20,17 +41,18 @@
                 <i class="bx box-menu" id="menu-icon"></i>
                 <!-- logo -->
                 <a href="#" class="logo">Car<span>Point</span></a>
+                <img src="img/logo.png" alt="logo" style="width: 70px;  position: relative;">
                 <!-- Nav list -->
                 <ul class="navbar">
                     <li><a href="#home" class="active" >Home</a></li>
-                    <li><a href="#about">About</a></li>
+                    <li><a href="about.html">About</a></li>
                     
                     
                 </ul>
 
                 <!-- button login  -->
                 <div class="login-btn">
-                    <a href="login.html" class="btn">Login</a>
+                    <a href="login.html" class="btn" style="padding: 15%;">Login</a>
 
                 </div>
 
@@ -38,7 +60,8 @@
                 <!-- <i class="bx bx-search" id="search-icon"></i> -->
                 <!-- search box -->
                 <div class="search-box container">
-                    <input type="search" name="" id="" placeholder="search here.."/>
+                    <input type="text" name="" id="searchInput" placeholder="search cars.."/>
+                    <button onclick="performSearch()">Search</button>
                     
                 </div>
 
@@ -68,7 +91,7 @@
             <div class="headings container">
                 <span>All Cars</span>
                 <h2>We have all types cars</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure amet non eaque, fugit odit laborum ipsum necessitatibus molestiae, nisi dolore aperiam repudiandae, tenetur deserunt hic quibusdam itaque velit eum at!</p>
+                <p>"We offer a diverse range of cars to suit every preference and need."!</p>
 
             </div>
 
@@ -77,7 +100,7 @@
                 <!-- box1  -->
                 <div class="box">
                     <img src="img/car1.jpg" alt="carimg">
-                    <h2>Check Out</h2>
+                    <!-- <h2>Check Out</h2> -->
 
                 </div>
 
@@ -85,35 +108,35 @@
                 <div class="box">
                     <img src="img/car2.jpg" alt="carimg">
                    
-                    <a href="#"> <h2>Check Out</h2></a>
+                    <!-- <a href="#"> <h2>Check Out</h2></a> -->
 
                 </div>
 
                 <!-- box3  -->
                 <div class="box">
                     <img src="img/car3.jpg" alt="carimg">
-                    <a href="#"> <h2>Check Out</h2></a>
+                    <!-- <a href="#"> <h2>Check Out</h2></a> -->
 
                 </div>
 
                 <!-- box4  -->
                 <div class="box">
                     <img src="img/car4.jpg" alt="carimg">
-                    <a href="#"> <h2>Check Out</h2></a>
+                    <!-- <a href="#"> <h2>Check Out</h2></a> -->
 
                 </div>
 
                 <!-- box5  -->
                 <div class="box">
                     <img src="img/car5.jpg" alt="carimg">
-                    <a href="#"> <h2>Check Out</h2></a>
+                    <!-- <a href="#"> <h2>Check Out</h2></a> -->
 
                 </div>
 
                 <!-- box6  -->
                 <div class="box">
                     <img src="img/car6.jpg" alt="carimg">
-                    <a href="#"> <h2>Check Out</h2></a>
+                    <!-- <a href="#"> <h2>Check Out</h2></a> -->
 
                 </div>
             </div>
@@ -128,18 +151,54 @@
             </div>
             <div class="about-text">
                 <span>Our Services</span>
-                <h2>Cheap Price with <br>Quality Cars</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium optio similique esse voluptates repellat ducimus suscipit reprehenderit. Repellat ipsum saepe, officiis a amet perferendis necessitatibus quis, praesentium totam laboriosam vero.</p>
+                <h2>Affordable Price with <br>Quality Cars</h2>
+                <p>"Explore Our Car Selection: Discover a comprehensive array of vehicles to match your preferences. From sleek sedans to rugged SUVs, we offer a wide range of options, ensuring you find the perfect ride for your journey."</p>
                 <!-- about button  --><br>
-                <a href="#" class="btn">Learn more</a>
+                <a href="about.html" class="btn">Learn more</a>
 
             </div>
 
 
         </section>
 
+        <section>
+            <footer style="background-color: rgb(240, 193, 193);">
+                <p style="align-items: center; margin-left: 45%; ">Developed by: Dnd</p>
+                <p style="align-items: center; margin-left: 45%; "><a href="mailto:carpoint@example.com">carpoint@example.com</a></p>
+              </footer>
+        </section>
+
         <!-- link to js -->
         <script src="main.js"></script>
+
+        <script>
+//             function performSearch() {
+//     var searchQuery = document.getElementById("searchInput").value;
+//     // Redirect to the seller's page and pass the search query as a parameter
+//     window.location = "item.html?search=" + encodeURIComponent(searchQuery);
+// }
+
+function performSearch() {
+        var searchQuery = document.getElementById("searchInput").value;
+
+        // Retrieve cars from local storage
+        var cars = JSON.parse(localStorage.getItem("cars")) || [];
+
+        // Check if there's a car with the matching model
+        var hasMatchingCar = cars.some(function(car) {
+            return car.model.toLowerCase().includes(searchQuery.toLowerCase());
+        });
+
+        if (hasMatchingCar) {
+            // Redirect to the search result page and pass the search query as a parameter
+            window.location = "item.html?search=" + encodeURIComponent(searchQuery);
+        } else {
+            // Show "Not Matched" validation message
+            alert("No cars matched the search query.");
+        }
+    }
+
+        </script>
 
     
   </body>

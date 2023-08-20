@@ -1,15 +1,183 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link
-        href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-        rel="stylesheet"
-      />
-      <link rel="stylesheet" href="style.css" />
-    </head>
+<head>
+    <link
+    href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="user_details">
+        <h4>Welcome..<span>AddCars</span></h4>
+        <p>Username:
+            <script>
+               document.write(localStorage.getItem('username'))
+            </script>
+        </p>
+        <button class="btn" onclick="logout()">Logout</button>
+        <div class="card" id="form" action="#">
+            <form>
+                <div class="container">
+                    <ul>
+                        <li>Make</li>
+                        <input type="text" placeholder="Enter Make" id="make">
+                        <li>Image</li>
+                        <input type="file" id="myFile" name="filename">
+                        <li>Model</li>
+                        <input type="text" placeholder="Enter Model" id="model">
+                        <li>Year</li>
+                        <input type="text" placeholder="Enter Year" id="year">
+                        <li>Milage</li>
+                        <input type="text" placeholder="Enter Milage" id="milage">
+                        <li>Location</li>
+                        <input type="text" placeholder="Enter Location" id="location">
+                        <li>Price</li>
+                        <input type="text" placeholder="Enter Price" id="price">
+                    </ul>
+                    <br>
+                    <button type="button" id="add" class="btn" style="width: 82px; height: 34px; margin: 3px; padding: 4px;" onclick="manageData()">Add Car</button>
+                    <button type="button" id="update" class="btn" style="width: 82px; height: 34px; margin: 3px; padding: 4px;" >Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div class="table container">
+        <table class="table table_bordered" id="addtable">
+            <thead>
+                <tr>
+                    <th>Make</th>
+                    <th>Image</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>Milage</th>
+                    <th>Location</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
 
-    <body>
+    <script>
+        function manageData() {
+            var make = document.getElementById("make").value;
+            var model = document.getElementById("model").value;
+            var year = document.getElementById("year").value;
+            var milage = document.getElementById("milage").value;
+            var location = document.getElementById("location").value;
+            var price = document.getElementById("price").value;
+            var imageInput = document.getElementById("myFile");
+            var imageFile = imageInput.files[0];
 
-        knfv
-    </body>
+            var car = {
+                make: make,
+                model: model,
+                year: year,
+                milage: milage,
+                location: location,
+                price: price,
+                image: imageFile ? URL.createObjectURL(imageFile) : ''
+            };
+
+            // Get existing data from local storage or initialize an empty array
+            var cars = JSON.parse(localStorage.getItem("cars")) || [];
+
+            // Add the new car to the array
+            cars.push(car);
+
+            // Save the updated array back to local storage
+            localStorage.setItem("cars", JSON.stringify(cars));
+
+            // Clear the form fields
+            document.getElementById("make").value = "";
+            document.getElementById("model").value = "";
+            document.getElementById("year").value = "";
+            document.getElementById("milage").value = "";
+            document.getElementById("location").value = "";
+            document.getElementById("price").value = "";
+            imageInput.value = ''; // Clear the image input
+
+            // Display the added car in the table
+            displayCars();
+        }
+
+        function displayCars() {
+            var cars = JSON.parse(localStorage.getItem("cars")) || [];
+            var tableBody = document.getElementById("tableBody");
+            tableBody.innerHTML = "";
+
+            for (var i = 0; i < cars.length; i++) {
+                var car = cars[i];
+                var row = tableBody.insertRow();
+
+                var makeCell = row.insertCell(0);
+                var imageCell = row.insertCell(1);
+                var modelCell = row.insertCell(2);
+                var yearCell = row.insertCell(3);
+                var milageCell = row.insertCell(4);
+                var locationCell = row.insertCell(5);
+                var priceCell = row.insertCell(6);
+
+                makeCell.innerHTML = car.make;
+                if (car.image) {
+                    var imageElement = document.createElement("img");
+                    imageElement.src = car.image;
+                    imageElement.className = "car-image";
+                    imageCell.appendChild(imageElement);
+                }
+                modelCell.innerHTML = car.model;
+                yearCell.innerHTML = car.year;
+                milageCell.innerHTML = car.milage;
+                locationCell.innerHTML = car.location;
+                priceCell.innerHTML = car.price;
+            }
+        }
+
+        // Call the displayCars function when the page loads
+        displayCars();
+
+
+        // logout 
+
+        function logout() {
+            // Remove the username from local storage
+            localStorage.removeItem('username');
+            // Redirect to the homepage
+            window.location.href = "index.html";
+        }
+
+
+// search 
+// Function to get the value of a URL parameter
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    var results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+// Retrieve the search query parameter from the URL
+var searchQuery = getParameterByName("search");
+
+// Retrieve cars from local storage
+var cars = JSON.parse(localStorage.getItem("cars")) || [];
+
+// Filter cars based on the search query
+var filteredCars =  cars.filter(function(car){
+    return(
+        car.make.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        car.model.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        car.year.toLowerCase().includes(searchQuery.toLowerCase()) 
+    )
+})
+
+// Display the filtered cars (similar to your existing code)
+// ...
+
+
+
+    </script>
+</body>
 </html>

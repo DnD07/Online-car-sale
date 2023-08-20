@@ -98,12 +98,31 @@
         let username = document.getElementById("username").value;
         let passwordd = document.getElementById("password").value;
 
-        //  localStorage.setItem('name', namee);
-        //  localStorage.setItem('addresss',addresss);
-        //  localStorage.setItem('phone', phonee);
-        //  localStorage.setItem('email', emaill);
-        //  localStorage.setItem('username', usernames);
-        //  localStorage.setItem('password',passwordd);
+        let user_records = new Array();
+        user_records = JSON.parse(localStorage.getItem("users"))
+          ? JSON.parse(localStorage.getItem("users"))
+          : [];
+
+        // username compare
+        if (
+          user_records.some((v) => {
+            return v.username == username;
+          })
+        ) {
+          alert("Username match.");
+        } else {
+          user_records.push({
+            name: namee,
+            address: addresss,
+            phone: phonee,
+            email: emaill,
+            username: username,
+            password: passwordd,
+          });
+          localStorage.setItem("users", JSON.stringify(user_records));
+          window.location.href = 'login.html'
+        }
+      }
 
        
 
@@ -172,31 +191,7 @@
 
       };
 
-      let user_records = new Array();
-        user_records = JSON.parse(localStorage.getItem("users"))
-          ? JSON.parse(localStorage.getItem("users"))
-          : [];
-
-        // username compare
-        if (
-          user_records.some((v) => {
-            return v.username == username;
-          })
-        ) {
-          alert("Username match.");
-        } else {
-          user_records.push({
-            name: namee,
-            address: addresss,
-            phone: phonee,
-            email: emaill,
-            username: username,
-            password: passwordd,
-          });
-          localStorage.setItem("users", JSON.stringify(user_records));
-          window.location.href = 'login.html'
-        }
-      }
+     
     </script>
   </body>
 </html>

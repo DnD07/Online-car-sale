@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <!-- ... (head content) ... -->
+
+</head>
+<body>
+
+    <!-- Display the search query -->
+    <div>
+        <h2 style="margin-left: 33%; color: red; margin-top: 2%;">Car Details</h2>
+        <p id="searchQueryDisplay" style="margin-left: 33%; color: red; margin-top: 2%; font-size: large; font-weight: bold;"></p>
+    </div>
+
+    <!-- Display the filtered cars -->
+    <div id="filteredCars">
+        <!-- Cars will be displayed here -->
+    </div>
+
+    <script>
+        // Function to get the value of a URL parameter
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+            var results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        // Retrieve the search query parameter from the URL
+        var searchQuery = getParameterByName("search");
+
+        // Display the search query
+        document.getElementById("searchQueryDisplay").textContent = searchQuery;
+
+        // Retrieve cars from local storage or a data source
+        var cars = JSON.parse(localStorage.getItem("cars")) || [];
+
+        // Filter and display the cars based on the search query
+        var filteredCars = cars.filter(function(car) {
+            return (
+                car.make.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                car.model.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                car.year.toLowerCase().includes(searchQuery.toLowerCase())
+                // ... (add other properties you want to search)
+            );
+        });
+
+        // Display the filtered cars on the page
+        var filteredCarsContainer = document.getElementById("filteredCars");
+        filteredCars.forEach(function(car) {
+            var carElement = document.createElement("div");
+            carElement.className = "car-details";
+            carElement.innerHTML = `           
+                <div class="cardd">
+  <img src=${car.image} alt="car image" style="width:100%"><br>
+  <div class="container">
+    <h4><b>Model: ${car.model}</b></h4><br>
+    <p>Year: ${car.year}</p>
+    <p>Location: ${car.location}r</p>
+    <p>Price: ${car.price}r</p>
+  </div>
+</div> 
+
+            `;
+            filteredCarsContainer.appendChild(carElement);
+        });
+    </script>
+</body>
+</html>
